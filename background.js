@@ -8,25 +8,13 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-// Handle context menu clicks and send selected text to content script for parsing
+// Handle context menu clicks and parse text directly - Claude-AI
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "create-calendar-event") {
     const selectedText = info.selectionText;
+    const eventData = parseStructuredText(selectedText);
 
-    chrome.tabs.sendMessage(tab.id, {
-      action: "parseAndCreateEvent",
-      text: selectedText
-    });
-  }
-});
-
-// Receive parsed event data from content script and open Google Calendar
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "openCalendar") {
-    const { title, startTime, endTime } = message.eventData;
-
-    const calendarUrl = createGoogleCalendarUrl(title, startTime, endTime);
-
+    const calendarUrl = createGoogleCalendarUrl(eventData.title, eventData.startTime, eventData.endTime);
     chrome.tabs.create({ url: calendarUrl });
   }
 });
@@ -41,6 +29,28 @@ function createGoogleCalendarUrl(title, startTime, endTime) {
   });
 
   return `${baseUrl}?${params.toString()}`;
+}
+
+// Parse selected text to extract meeting details - Claude-AI
+function parseStructuredText(text) {
+  const titleMatch = text.match(/title:\s*([^\n\r]+)/i);
+  const dateMatch = text.match(/date:\s*(\d{1,2}\/\d{1,2}\/\d{4})/i);
+  const timeMatch = text.match(/time:\s*(\d{1,2}:\d{2})/i);
+
+  const title = titleMatch ? titleMatch[1].trim() : 'Meeting';
+  const date = dateMatch ? dateMatch[1] : null;
+  const time = timeMatch ? timeMatch[1] : null;
+
+  let startTime = null;
+  if (date && time) {
+    startTime = new Date(`${date} ${time}`);
+  }
+
+  return {
+    title,
+    startTime,
+    endTime: null
+  };
 }
 
 // Convert JavaScript dates to Google Calendar format (YYYYMMDDTHHMMSSZ)
