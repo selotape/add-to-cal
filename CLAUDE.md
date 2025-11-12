@@ -14,6 +14,7 @@
 4. Keep `master` as the stable main branch
 5. Before any git editing action (e.g. push), do a proper git fetch and rebase onto remote and resolve conflicts
 6. Git is configured to prefer rebasing over merging for cleaner history
+7. Always switch back to `dev` branch when done working outside dev
 
 ## Commit Messages
 - Do not include Claude Code attribution or co-authorship
