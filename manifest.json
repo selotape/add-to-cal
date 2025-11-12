@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Go Links - Quick Calendar",
+  "version": "1.0.0",
+  "description": "Highlight text with meeting details and create Google Calendar events",
+
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "tabs"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Go Links - Quick Calendar"
+  }
+}
