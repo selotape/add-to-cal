@@ -12,6 +12,8 @@
 2. Create feature branches from `dev` when needed
 3. Merge completed work to `master` branch
 4. Keep `master` as the stable main branch
+5. Before any git editing action (e.g. push), do a proper git fetch and rebase onto remote and resolve conflicts
+6. Git is configured to prefer rebasing over merging for cleaner history
 
 ## Commit Messages
 - Do not include Claude Code attribution or co-authorship
