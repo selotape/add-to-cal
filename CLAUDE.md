@@ -8,10 +8,10 @@
 - Create PRs from feature branches to `master`
 
 ## Branch Strategy
-1. Switch to or create `dev` branch for all development work
-2. Create feature branches from `dev` when needed
-3. Merge completed work to `master` branch
-4. Keep `master` as the stable main branch
+1. **Never work directly on master** - always work on `dev` branch
+2. Switch to or create `dev` branch for all development work
+3. When ready to submit changes to master, create a PR from `dev` to `master`
+4. Keep `master` as the stable main branch through PRs only
 5. Before any git editing action (e.g. push), do a proper git fetch and rebase onto remote and resolve conflicts
 6. Git is configured to prefer rebasing over merging for cleaner history
 7. Always switch back to `dev` branch when done working outside dev
