@@ -1,3 +1,5 @@
+// Create right-click context menu when extension is installed
+// Only shows when text is selected on any webpage
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "create-calendar-event",
@@ -6,6 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+// Handle context menu clicks and send selected text to content script for parsing
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "create-calendar-event") {
     const selectedText = info.selectionText;
@@ -17,6 +20,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   }
 });
 
+// Receive parsed event data from content script and open Google Calendar
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "openCalendar") {
     const { title, startTime, endTime } = message.eventData;
@@ -27,6 +31,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+// Build Google Calendar URL with event details
 function createGoogleCalendarUrl(title, startTime, endTime) {
   const baseUrl = "https://calendar.google.com/calendar/render";
   const params = new URLSearchParams({
@@ -38,6 +43,8 @@ function createGoogleCalendarUrl(title, startTime, endTime) {
   return `${baseUrl}?${params.toString()}`;
 }
 
+// Convert JavaScript dates to Google Calendar format (YYYYMMDDTHHMMSSZ)
+// Defaults to 1-hour duration if no end time provided
 function formatDateTimeForCalendar(startTime, endTime) {
   const start = startTime ? new Date(startTime).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z' : '';
   const end = endTime ? new Date(endTime).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z' : '';

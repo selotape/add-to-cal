@@ -16,3 +16,8 @@
 ## Commit Messages
 - Do not include Claude Code attribution or co-authorship
 - Write clear, concise commit messages without AI attribution
+
+## Code Documentation
+- When creating new files or making massive edits, add short comment explanations above each critical distinct section
+- Attribute comments to Claude-AI for clarity
+- Example: `// Handle user authentication and session management - Claude-AI`
