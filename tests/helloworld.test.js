@@ -1,11 +1,11 @@
 // Unit tests for Chrome extension calendar functionality
 
-// Import functions from background.js
-const {
+// Import functions from calendarUtils.js
+import {
   parseStructuredText,
   createGoogleCalendarUrl,
   formatDateTimeForCalendar
-} = require('../background.js');
+} from '../calendarUtils.js';
 
 describe('Chrome Extension Calendar Tests', () => {
   test('should verify Chrome API mocks exist', () => {
