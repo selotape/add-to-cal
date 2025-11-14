@@ -2,7 +2,7 @@
 
 // Parse selected text to extract meeting details
 function parseStructuredText(text) {
-  const titleMatch = text.match(/title:\s*([^\n\r]+)/i);
+  const titleMatch = text.match(/title:\s*([^\n\r]+?)(?:\s*(?:date|time):|$)/i);
   const dateMatch = text.match(/date:\s*(\d{1,2}\/\d{1,2}\/\d{4})/i);
   const timeMatch = text.match(/time:\s*(\d{1,2}:\d{2})/i);
 
