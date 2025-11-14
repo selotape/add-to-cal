@@ -38,6 +38,23 @@ describe('Chrome Extension Calendar Tests', () => {
       expect(result.title).toBe('Important Event');
       expect(result.startTime).toBe(null);
     });
+
+    test('should only capture title text when date/time on same line', () => {
+      const text = 'Title: Team Meeting Date: 12/25/2024 Time: 14:30';
+      const result = parseStructuredText(text);
+
+      expect(result.title).toBe('Team Meeting');
+      expect(result.title).not.toContain('Date:');
+      expect(result.title).not.toContain('Time:');
+    });
+
+    test('should handle single-line format with spaces', () => {
+      const text = 'Title: Project Review   Date: 1/15/2025   Time: 10:00';
+      const result = parseStructuredText(text);
+
+      expect(result.title).toBe('Project Review');
+      expect(result.startTime).toBeInstanceOf(Date);
+    });
   });
 
   describe('formatDateTimeForCalendar', () => {
