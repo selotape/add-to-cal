@@ -8,7 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-// Handle context menu clicks and parse text directly - Claude-AI
+// Handle context menu clicks and parse text directly
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "create-calendar-event") {
     const selectedText = info.selectionText;
@@ -31,7 +31,7 @@ function createGoogleCalendarUrl(title, startTime, endTime) {
   return `${baseUrl}?${params.toString()}`;
 }
 
-// Parse selected text to extract meeting details - Claude-AI
+// Parse selected text to extract meeting details
 function parseStructuredText(text) {
   const titleMatch = text.match(/title:\s*([^\n\r]+)/i);
   const dateMatch = text.match(/date:\s*(\d{1,2}\/\d{1,2}\/\d{4})/i);
@@ -68,4 +68,13 @@ function formatDateTimeForCalendar(startTime, endTime) {
   }
 
   return '';
+}
+
+// Export functions for testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    parseStructuredText,
+    createGoogleCalendarUrl,
+    formatDateTimeForCalendar
+  };
 }

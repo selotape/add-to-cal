@@ -32,6 +32,9 @@ Desktop.ini
 *.log
 logs/
 
+# Test coverage
+coverage/
+
 # Environment variables
 .env
 .env.local
